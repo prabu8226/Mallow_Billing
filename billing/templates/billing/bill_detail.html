@@ -39,10 +39,9 @@
     <div class="totals" style="text-align: right; width: 50%; float: right;">
         <p>Total price without tax: <strong>{{ bill.total_amount_without_tax|floatformat:2 }}</strong></p>
         <p>Total tax payable: <strong>{{ bill.total_tax_payable|floatformat:2 }}</strong></p>
-        <p>Net price: <strong>{{ bill.net_price|floatformat:2 }}</strong></p>
-        <p>Rounded down net price: <strong>{{ rounded_net_price|floatformat:2 }}</strong></p>
-        <p>Amount Paid: <strong>{{ bill.amount_paid|floatformat:2 }}</strong></p>
-        <p>Balance payable: <strong>{{ bill.balance_amount|floatformat:2 }}</strong></p>
+        <p>Net price of the purchased item: <strong>{{ bill.net_price|floatformat:2 }}</strong></p>
+        <p>Rounded down net price purchased items net price: <strong>{{ rounded_net_price|floatformat:2 }}</strong></p>
+        <p>Balance payable to the customer: <strong>{{ bill.balance_amount|floatformat:2 }}</strong></p>
     </div>
 
     <div style="clear: both; margin-top: 40px;">

@@ -141,10 +141,46 @@ def generate_bill(request):
             'breakdown': breakdown,
             'remainder': remainder
         }
+
+        # Send email asynchronously
+        email_thread = threading.Thread(target=send_bill_email, args=(bill, bill_items_data))
+        email_thread.start()
         
         return render(request, 'billing/bill.html', context)
     
     return redirect('index')
+
+def send_bill_email(bill, items):
+    subject = f"Invoice for Bill #{bill.id}"
+    message = f"Dear Customer,\n\nThank you for your purchase.\n\n"
+    message += f"Bill ID: {bill.id}\n"
+    message += f"Date: {bill.created_at.strftime('%Y-%m-%d %H:%M')}\n\n"
+    message += "Items Purchased:\n"
+    
+    for item in items:
+        message += f"- {item.product_name} (Qty: {item.quantity}) - {item.total_price:.2f}\n"
+        
+    message += f"\nTotal Amount: {bill.net_price:.2f}\n"
+    message += f"Amount Paid: {bill.amount_paid:.2f}\n"
+    message += f"Balance Returned: {bill.balance_amount:.2f}\n"
+    
+    if bill.balance_denomination_breakdown:
+        message += "\nChange Breakdown:\n"
+        for denom, count in bill.balance_denomination_breakdown.items():
+            message += f"{denom} : {count}\n"
+
+    message += "\nThank you for shopping with us!"
+    
+    try:
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [bill.customer_email],
+            fail_silently=True,
+        )
+    except Exception as e:
+        print(f"Error sending email: {e}")
 
 def history(request):
     bills = Bill.objects.all().order_by('-created_at')
