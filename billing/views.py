@@ -9,6 +9,13 @@ import json
 from math import floor
 from django.db import transaction
 
+from django.core.mail import EmailMessage
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from io import BytesIO
+
 
 def index(request):
     products = Product.objects.all()

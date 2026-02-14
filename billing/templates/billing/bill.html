@@ -27,12 +27,6 @@
                 <td>{{ item.unit_price|floatformat:2 }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.base_price|floatformat:2 }}</td>
-                <!-- Wait, need a multiply filter or calculate in view -->
-                <!-- Purchase Price usually means Unit Price * Quantity *before tax*? Or just Unit Price?
-                     Image shows:
-                     Prod ID | Unit Price | Qty | Purchase Price | Tax % | Tax Pay | Total
-                     Let's assume Purchase Price = Unit Price * Quantity (Base Amount)
-                -->
                 <td>{{ item.tax_percentage }}%</td>
                 <td>{{ item.tax_amount|floatformat:2 }}</td>
                 <td>{{ item.total_price|floatformat:2 }}</td>
@@ -57,7 +51,7 @@
             {% for denom, count in breakdown.items %}
             <li style="font-size: 1.1em;">{{ denom }} : {{ count }}</li>
             {% endfor %}
- 
+
         </ul>
     </div>
 

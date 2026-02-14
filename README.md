@@ -1,58 +1,88 @@
-# Billing System
+# 🧾 Billing System
 
-A simple Django-based billing application.
+A sophisticated, modern Django-based billing application designed for efficiency and ease of use. It features dynamic item management, automated tax calculation, and a change-returning algorithm.
 
-## Prerequisites
+---
 
-- Python 3.8+
-- Django 4.0+
+## 🚀 Getting Started
 
-## Setup Instructions
+### 1. Prerequisites
+- **Python**: 3.12+
+- **Database**: SQLite (default)
 
-1.  **Clone/Extract the project**:
-    Ensure you represent in the project root directory (where `manage.py` is located).
+### 2. Installation
 
-2.  **Create and Activate a Virtual Environment** (Optional but recommended):
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    ```
+Clone the repository and navigate to the project root:
 
-3.  **Install Dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
+```bash
+cd Mallow_Billing
+```
 
-4.  **Apply Database Migrations**:
-    ```bash
-    python3 manage.py migrate
-    ```
+Create and activate a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+```
 
-5.  **Seed Initial Product Data**:
-    Run the following command to populate the database with sample products:
-    ```bash
-    python3 manage.py seed_products
-    ```
-    (Note: This will delete any existing products and create fresh ones).
+Install the required dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-6.  **Run the Development Server**:
-    ```bash
-    python3 manage.py runserver
-    ```
+### 3. Configuration ⚙️
 
-7.  **Access the Application**:
-    Open your browser and navigate to `http://127.0.0.1:8000`.
+The application uses environment variables for security. Create a `.env` file in the project root:
 
-## Features
+```ini
+# Security
+SECRET_KEY=your-secret-key-here
 
-- **Dynamic Billing Page**: Add multiple products, enter quantities, and specify available denominations.
-- **Bill Generation**: Calculates totals, taxes, and balance to be returned.
-- **Change Calculation**: Algorithmically determines the optimal breakdown of change to return based on shop's available cash.
+# Email (SendGrid Configuration)
+EMAIL_HOST_USER=apikey
+EMAIL_HOST_PASSWORD=your-sendgrid-api-key
+DEFAULT_FROM_EMAIL=Your Name <your-email@example.com>
+```
 
-- **History**: View past bills and their details.
+### 4. Database Setup
 
-## Assumptions
+Apply migrations and seed initial product data:
+```bash
+python manage.py migrate
+python manage.py seed_products
+```
+*Note: `seed_products` will populate the database with a catalog of items to get you started immediately.*
 
-- Tax is calculated per item based on the product's tax percentage.
-- Rounding is applied to the net price (flooring) as per requirements.
-- "Purchase Price" in the bill table is interpreted as the base price (Quantity * Unit Price) before tax.
+### 5. Running the App
+
+Start the development server:
+```bash
+python manage.py runserver
+```
+Visit the app at [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+
+## ✨ Key Features
+
+- **Dynamic Billing Interface**: Add/remove items on the fly with real-time calculations.
+- **Automated Tax Engine**: Intelligent GST/Tax calculation per product category.
+- **Smart Change Algorithm**: Calculates the optimal denomination breakdown for customer change based on available cash reserves.
+- **Transaction History**: Comprehensive record of all past bills for easy auditing.
+- **PDF Export**: (If implemented) Generate professional receipts for customers.
+
+---
+
+## 🛠 Project Structure
+
+- `billing/`: Main application logic, including models and views.
+- `billing_system/`: Project configuration and settings.
+- `static/`: Frontend assets (CSS, JS).
+- `templates/`: HTML structures.
+
+---
+
+## 📝 Assumptions & Notes
+
+- **Tax Logic**: Calculated per item based on pre-defined product rates.
+- **Rounding**: Net prices are floored to the nearest integer as per business requirements.
+- **Cash Management**: The change algorithm assumes a standard set of denominations (2000, 500, 200, 100, 50, 20, 10, 5, 2, 1).
