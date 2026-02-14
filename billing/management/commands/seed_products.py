@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 from billing.models import Product
 
 class Command(BaseCommand):
-    help = 'Seeds the database with initial products'
 
     def handle(self, *args, **kwargs):
         Product.objects.all().delete()
@@ -23,4 +22,4 @@ class Command(BaseCommand):
         for p_data in products:
             Product.objects.create(**p_data)
             
-        self.stdout.write(self.style.SUCCESS(f'Successfully seeded {len(products)} products'))
+        self.stdout.write(self.style.SUCCESS(f'Successfully saved {len(products)} products'))
